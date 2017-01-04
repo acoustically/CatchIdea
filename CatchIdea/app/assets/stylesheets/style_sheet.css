@@ -29,3 +29,25 @@ body{
 	margin-top:150px;
 	border-radius:5px;
 }
+.left_and_middle {
+	float:left;
+}
+.left_side {
+	float:left;
+	height:1000px;
+	width:300px;
+	border-right:1px solid #aaaaaa;
+	font-size:200px;
+	overflow:auto;
+}
+.right_side {
+	float:right;
+	width:500px;
+	height:1000px;
+	border-left:1px solid #aaa;
+	overflow:auto;
+}
+.contents {
+	height:1000px;
+	border-bottom:1px solid black;
+}

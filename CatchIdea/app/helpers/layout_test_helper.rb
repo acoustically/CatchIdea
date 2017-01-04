@@ -1,0 +1,2 @@
+module LayoutTestHelper
+end

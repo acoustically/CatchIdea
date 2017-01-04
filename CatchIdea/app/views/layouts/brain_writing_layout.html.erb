@@ -1,0 +1,14 @@
+<% content_for :content do %>
+	<div class = "left_and_middle">
+		<div class = "left_side">
+			<%= yield :left_side %>
+		</div>
+		<div class = "midle">
+			<%= yield :middle %>
+		</div>
+	</div>
+	<div class = "right_side">
+		<%= yield :right_side %>
+	</div>
+<% end %>
+<%= render template: "layouts/application" %>
