@@ -6,38 +6,23 @@
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-		<style>
-			@import url(https://fonts.googleapis.com/css?family=Architects+Daughter);
-  		body{
-				background-image: url('/back_ground.png');
-				background-attachment:fixed;
-				background-position: right top;
-				background-repeat: repeat-y;
-				padding:0;
-				margin:0;				
-			}
-			.header {
-				background-color:#333;
-				color:white;
-				height:150px;
-				padding:10px;
-			}
-			.home_link {
-				font-size:50px;
-				line-height:150px;
-				padding-left:50px;
-				text-decoration:none;
-				color:white;
-				font-family:'Architects Daughter';
-			}
-		</style>
+		<link href="https://fonts.googleapis.com/css?family=Architects+Daughter" rel="stylesheet">
+		<!-- 합쳐지고 최소화된 최신 CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+		<!-- 부가적인 테마 -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+		<!-- 합쳐지고 최소화된 최신 자바스크립트 -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+		<meta name = "viewpor" content = "width = devie-width, initail-scale = 1">
+		<link rel="stylesheet" href = "style_sheet.css">
+
 	</head>
 	<body>
 		<div class = "header">
 			<%= link_to("Catch Mind", {controller: :main, action: :home}, class: :home_link) %>
 		</div>
 		<div class = "contents">
-    	<%= yield %>
+    	<%= content_for?(:content) ? yield(:content) : yield %>
 		</div>
   </body>
 </html>
