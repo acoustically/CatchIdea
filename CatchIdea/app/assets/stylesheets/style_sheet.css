@@ -40,20 +40,26 @@ a.home_link:hover {
 	float:left;
 	height:1000px;
 	width:300px;
-	border-right:1px solid #aaaaaa;
+	border-right:1px solid #aaa;
 	font-size:200px;
 	overflow:auto;
 }
 .right_side {
-	float:right;
-	width:500px;
 	height:1000px;
+	float:left;
 	border-left:1px solid #aaa;
+	overflow:auto;
+}
+.middle {
+	float:left;
+	width:1000px;
+	height:1000px;
+	border-right:1px solid #aaa;
 	overflow:auto;
 }
 .contents {
 	height:1000px;
-	border-bottom:1px solid black;
+	border-bottom:1px solid #aaa;;
 }
 .header_button {
 	background-image: url("/assets/header_button_left_bar.png");
