@@ -15,11 +15,14 @@
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 		<meta name = "viewpor" content = "width = devie-width, initail-scale = 1">
 		<link rel="stylesheet" href = "style_sheet.css">
-
 	</head>
 	<body>
 		<div class = "header">
-			<%= link_to("Catch Mind", {controller: :main, action: :home}, class: :home_link) %>
+			<%= link_to("Catch Idea", {controller: :layout_test, action: :test_page}, class: :home_link) %>
+			<%= link_to("discription", {controller: :layout_test, action: :test_page}, class: :header_button, id: :header_button1) %>
+			<%= link_to("Profile", {controller: :layout_test, action: :test_page}, class: :header_button, id: :header_button2) %>
+			<%= link_to("Idea", {controller: :layout_test, action: :test_page}, class: :header_button, id: :header_button3) %>
+			<%= link_to("Friend", {controller: :layout_test, action: :test_page}, class: :header_button, id: :header_button4) %>
 		</div>
 		<div class = "contents">
     	<%= content_for?(:content) ? yield(:content) : yield %>
