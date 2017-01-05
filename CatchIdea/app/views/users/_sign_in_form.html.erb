@@ -1,0 +1,9 @@
+<%= form_tag({ controller: :users, action:sign_in }) do %>
+	<%= label_tag "Email" %>
+	<%= email_field_tag :email class: "form-control" %>
+	<br />
+	<%= label "PassWord" %>
+	<%= password_field_tag :password class: "form-control" %>
+	<br />
+	<%= submit_tag "Sign In" class: "btn btn-default"
+<% end %>

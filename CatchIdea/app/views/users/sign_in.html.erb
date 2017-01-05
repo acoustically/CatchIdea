@@ -1,1 +1,26 @@
-<%= "afssafsa" %>
+<div class = "sign_form">
+	<%= form_tag({ controller: :users, action: :sign_in_end, id: 0 }) do %>
+		<h1>Sign in to Catch Idea</h1><br /><br />
+		<div style = "text-align:left">
+			<div class = "form-group">
+				<%= label_tag "email", "Email address", class: "sign_font" %>
+				<%= text_field_tag :email, '', class: "form-control input-lg" %>
+			</div>
+			<br />
+			<div class = "form-group">
+				<%= label_tag "password", "Password", class: "sign_font" %>
+				<%= password_field_tag :password, '', class: "form-control input-lg" %>
+			</div>
+		</div>
+			<br /><br />
+		<%= submit_tag "Sign In", class: "btn btn-default btn-block btn-lg" %>
+	<% end %>
+</div>
+
+
+
+
+
+
+
+

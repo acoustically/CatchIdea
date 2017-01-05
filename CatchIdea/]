@@ -29,7 +29,7 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
-        format.html { redirect_to url_for({controller: :users, action: :sign_in, id: 0}), notice: 'User was successfully created.' }
+        format.html { redirect_to @user, notice: 'User was successfully created.' }
         format.json { render :show, status: :created, location: @user }
       else
         format.html { render :new }
@@ -62,16 +62,10 @@ class UsersController < ApplicationController
     end
   end
 	def sign_in 
-		render layout: "layouts/application"
-	end
-	def sign_in_end
-		@users = User.all
-		if @users.where(email: :email, password: :password).nil?
-			redirect_to url_for(controller: :layout_test, action: :test_page, id: 1)
-		else 
-			redirect_to url_for(action: :sign_in, id: 0)
-		end
-	end
+		render layout: "applicaiton"
+		@email
+		@password
+	end 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
