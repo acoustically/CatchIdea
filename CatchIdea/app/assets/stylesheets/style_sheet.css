@@ -4,7 +4,7 @@ body{
 	background-position: right top;
 	background-repeat: repeat-y;
 	padding:0;
-	margin:0;				
+	margin:0;
 }			
 .header {
 	background-color:#333;
@@ -35,31 +35,34 @@ a.home_link:hover {
 }
 .left_and_middle {
 	float:left;
+	width:100%;
 }
 .left_side {
 	float:left;
 	height:1000px;
-	width:300px;
+	width:15%;
 	border-right:1px solid #aaa;
 	font-size:200px;
 	overflow:auto;
 }
 .right_side {
 	height:1000px;
+	width:15%;
 	float:left;
 	border-left:1px solid #aaa;
 	overflow:auto;
 }
 .middle {
 	float:left;
-	width:1000px;
+	width:70%;
 	height:1000px;
 	border-right:1px solid #aaa;
 	overflow:auto;
 }
 .contents {
 	height:1000px;
-	border-bottom:1px solid #aaa;;
+	width:100%;
+	border-bottom:1px solid #aaa;
 }
 .header_button {
 	background-image: url("/assets/header_button_left_bar.png");
