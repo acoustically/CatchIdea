@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 	skip_before_action :sign_in?, only: [:sign_in, :new, :sign_in_end]
+	layout "layouts/main_layout"
   # GET /users
   # GET /users.json
   def index
