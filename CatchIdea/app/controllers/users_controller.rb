@@ -1,9 +1,12 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
-
+	skip_before_action :sign_in?, only: [:sign_in, :new, :sign_in_end]
   # GET /users
   # GET /users.json
   def index
+		if !admin?
+			head 404
+		end
     @users = User.all
   end
 
@@ -25,8 +28,12 @@ class UsersController < ApplicationController
   # POST /users
   # POST /users.json
   def create
-    @user = User.new(user_params)
-
+		if !User.find_by(email: email).nil?
+			redirect_to url_for({controller: :users, action: :new}), notice: 'Emaiil is invalid or already taken'
+			return
+		end
+    @user = User.new(sign_up_params)
+		@user.permission = 0
     respond_to do |format|
       if @user.save
         format.html { redirect_to url_for({controller: :users, action: :sign_in, id: 0}), notice: 'User was successfully created.' }
@@ -61,12 +68,16 @@ class UsersController < ApplicationController
       format.json { head :no_content }
     end
   end
-	def sign_in 
+	def sign_in
+		@user = User.new
 		render layout: "layouts/application"
 	end
 	def sign_in_end
 		@users = User.all
-		if @users.where(email: :email, password: :password).nil?
+		if !@users.find_by(email: email, password: password).nil?
+			reset_session
+			session[:email] = email
+			session[:password] = password
 			redirect_to url_for(controller: :layout_test, action: :test_page, id: 1)
 		else 
 			redirect_to url_for(action: :sign_in, id: 0)
@@ -80,6 +91,15 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:email, :password)
+      params.require(:user).permit(:email, :password, :name, :permission)
     end
+		def sign_up_params
+			params.require(:user).permit(:email, :password, :name)
+		end
+		def email
+			user_params[:email]
+		end
+		def password
+			user_params[:password]
+		end
 end
