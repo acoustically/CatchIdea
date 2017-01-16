@@ -23,6 +23,10 @@
     <%= label_tag "Name", nil, class: "sign_font" %> <br />
     <%= f.text_field :name, class: "form-control input-lg" %>
   </div> <br /> <br /><br />
+  <div class="field" "form-group">
+    <%= label_tag "Permission", nil, class: "sign_font" %> <br />
+    <%= f.number_field :permission, class: "form-control input-lg" %>
+  </div> <br /> <br /><br />
 
  	<div class="actaions">
  	  <%= f.submit "Sign Up", class: "btn btn-default btn-lg btn-block" %>
