@@ -18,7 +18,7 @@ class UsersController < ApplicationController
   # GET /users/new
   def new
     @user = User.new
-		render layout: "layouts/application"
+		render layout: "layouts/sign_layout"
   end
 
   # GET /users/1/edit
@@ -70,7 +70,7 @@ class UsersController < ApplicationController
   end
 	def sign_in
 		@user = User.new
-		render layout: "layouts/application"
+		render layout: "layouts/sign_layout"
 	end
 	def sign_in_end
 		@users = User.all
