@@ -1,11 +1,16 @@
+<% content_for :header do %>
+	<h1 style = "float:left"> Friends </h1>
+	<div style = "float:right" %>
+		<%= link_to(image_tag("/assets/add_icon.png", width: 70, height: 70), controller: :friends, action: :new) %>
+	</div>
+<% end %>
+<% content_for :index do %>
 <p id="notice"><%= notice %></p>
 
-<h1>Friends</h1>
 
-<table>
+<table class = "friend_table">
   <thead>
     <tr>
-      <th>User</th>
       <th>Name</th>
       <th>Email</th>
       <th colspan="3"></th>
@@ -15,17 +20,14 @@
   <tbody>
     <% @friends.each do |friend| %>
       <tr>
-        <td><%= friend.user_id %></td>
-        <td><%= friend.name %></td>
-        <td><%= friend.email %></td>
-        <td><%= link_to 'Show', friend %></td>
-        <td><%= link_to 'Edit', edit_friend_path(friend) %></td>
-        <td><%= link_to 'Destroy', friend, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><h3><%= friend.name %></h3></td>
+        <td><h3><%= friend.email %></h3></td>
+        <td width = "40"><%= link_to image_tag("/assets/detail_icon.png", width:40, height: 40), friend, class: "link friend_substract"%></td>
+				<td width = "40"><%= link_to image_tag("/assets/modify_icon.png", widht:40, height: 40), edit_friend_path(friend) %>
+        <td width = "40"><%= link_to image_tag("/assets/substract_icon.png", width: 40, height: 40), friend, class: "link friend_substract", method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
+<% end %>
 
-<br>
-
-<%= link_to 'New Friend', new_friend_path %>

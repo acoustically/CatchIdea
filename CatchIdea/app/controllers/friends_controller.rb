@@ -1,10 +1,11 @@
 class FriendsController < ApplicationController
   before_action :set_friend, only: [:show, :edit, :update, :destroy]
-
+	layout "layouts/main_layout"
   # GET /friends
   # GET /friends.json
   def index
-    @friends = Friend.all
+    @friends = User.find_by(id: session[:id]).friends
+		render layout: "layouts/friend_layout"
   end
 
   # GET /friends/1
@@ -25,7 +26,7 @@ class FriendsController < ApplicationController
   # POST /friends.json
   def create
     @friend = Friend.new(friend_params)
-
+		@friend.user_id = session[:id]
     respond_to do |format|
       if @friend.save
         format.html { redirect_to @friend, notice: 'Friend was successfully created.' }

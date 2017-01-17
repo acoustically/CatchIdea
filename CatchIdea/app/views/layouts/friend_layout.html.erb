@@ -1,0 +1,11 @@
+<% content_for :contents do %>
+	<div class = "friend">
+		<div class = "friend_header">
+			<%= yield :header %>
+			<div class = "friend_index">
+				<%= yield :index %>
+			</div>
+		</div>
+	</div>
+<% end %>
+<%= render template: "layouts/application" %>

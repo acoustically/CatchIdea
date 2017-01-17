@@ -18,11 +18,11 @@
 	</head>
 	<body>
 		<div class = "header">
-			<%= link_to("Catch Idea", {controller: :layout_test, action: :test_page}, class: :home_link) %>
-			<%= link_to(image_tag("/assets/menu_icon.png", width: 20), {controller: :layout_test, action: :test_page}, class: :header_button, id: :header_button1) %>
-			<%= link_to("Profile", {controller: :layout_test, action: :test_page}, class: :header_button, id: :header_button2) %>
-			<%= link_to("Idea", {controller: :layout_test, action: :test_page}, class: :header_button, id: :header_button3) %>
-			<%= link_to("Friend", {controller: :layout_test, action: :test_page}, class: :header_button, id: :header_button4) %>
+			<%= link_to("Catch Idea", {controller: :layout_test, action: :test_page}, class: "home_link link") %>
+			<%= link_to(image_tag("/assets/menu_icon.png", width: 20), {controller: :layout_test, action: :test_page}, class: "header_button link", id: :header_button1) %>
+			<%= link_to("Profile", {controller: :layout_test, action: :test_page}, class: "header_button link", id: :header_button2) %>
+			<%= link_to("Idea", {controller: :layout_test, action: :test_page}, class: "header_button link", id: :header_button3) %>
+			<%= link_to("Friend", {controller: :friends, action: :index, id: session[:id]}, class: "header_button link", id: :header_button4) %>
 		</div>
 		<div class = "contents">
     	<%= yield :contents %>

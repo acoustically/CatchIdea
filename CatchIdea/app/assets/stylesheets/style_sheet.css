@@ -81,20 +81,7 @@ a.home_link:active {
 	color:white;
 }
 a.header_button:hover {
-	text-decoration:none;
-	color:black;
-	background-color:white;
 	border-bottom:2px solid black;
-}
-a.header_button:visited {
-	text-decoration:none;
-	color:black;
-	background-color:white;
-}
-a.header_button:active {
-	text-decoration:none;
-	color:black;
-	background-color:white;
 }
 #header_button1 {
 	right:0px;
@@ -131,27 +118,49 @@ a.header_button:active {
 	font-size:120px;
 	font-family:'Architects Daughter';
 }
-a.home_link_sign:hover{
-	text-decoration:none;
-	color:black;
-	background-color:white;
-}
-a.home_link_sign:visited {
-	text-decoration:none;
-	color:black;
-	background-color:white;
-}
 .sign_content {
 	float:left;
 margin-left:200px;
 }
-
-
-
-
-
-
-
+.friend {
+	width:600px;
+	height:800PX;
+	margin:auto;
+	margin-top:50px;
+}
+.friend_header {
+	width:600px;
+	height:80px;
+	border-bottom:2px solid black;
+}
+.add_icon {
+}
+.friend_index {
+	width:600px;
+	height:720px;
+	overflow:auto;
+}
+.friend_table {
+	width: 600px;
+}
+a.link:hover {
+	text-decoration:none;
+	color:black;
+	background-color:white;
+}
+a.link:visited {
+	text-decoration:none;
+	color:black;
+	background-color:white;
+}
+a.link:active {
+	text-decoration:none;
+	color:black;
+	background-color:white;
+}
+.friend_substract {
+	float:right;
+}
 
 
 

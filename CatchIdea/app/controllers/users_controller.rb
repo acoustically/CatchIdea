@@ -75,10 +75,12 @@ class UsersController < ApplicationController
 	end
 	def sign_in_end
 		@users = User.all
-		if !@users.find_by(email: email, password: password).nil?
+		@current_user = @users.find_by(email: email, password: password)
+		if !@current_user.nil?
 			reset_session
 			session[:email] = email
 			session[:password] = password
+			session[:id] = @current_user.id
 			redirect_to url_for(controller: :layout_test, action: :test_page, id: 1)
 		else 
 			redirect_to url_for(action: :sign_in, id: 0)
