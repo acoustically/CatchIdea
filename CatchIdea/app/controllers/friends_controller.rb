@@ -27,14 +27,16 @@ class FriendsController < ApplicationController
   def create
     @friend = Friend.new(friend_params)
 		@friend.user_id = session[:id]
-    respond_to do |format|
-      if @friend.save
-        format.html { redirect_to @friend, notice: 'Friend was successfully created.' }
-        format.json { render :show, status: :created, location: @friend }
-      else
-        format.html { render :new }
-        format.json { render json: @friend.errors, status: :unprocessable_entity }
-      end
+		user = find_user(get_email)
+		if !user.nil?
+			@friend.name = user.name
+			if !user.email.equal?(session[:email]) && @friend.save
+       	redirect_to action: :index
+			else
+				redirect_to action: :new
+			end
+    else
+      redirect_to action: :new
     end
   end
 
@@ -43,9 +45,9 @@ class FriendsController < ApplicationController
   def update
     respond_to do |format|
       if @friend.update(friend_params)
-        format.html { redirect_to @friend, notice: 'Friend was successfully updated.' }
+        format.html { redirect_to action: :index, notice: 'Friend was successfully updated.' }
         format.json { render :show, status: :ok, location: @friend }
-      else
+			else
         format.html { render :edit }
         format.json { render json: @friend.errors, status: :unprocessable_entity }
       end
@@ -72,4 +74,10 @@ class FriendsController < ApplicationController
     def friend_params
       params.require(:friend).permit(:user_id, :name, :email)
     end
+		def get_email
+			friend_params[:email]
+		end
+		def find_user email
+			User.all.find_by(email: email)
+		end
 end

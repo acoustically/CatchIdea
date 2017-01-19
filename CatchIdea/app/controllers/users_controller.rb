@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
-	skip_before_action :sign_in?, only: [:sign_in, :new, :sign_in_end]
+	before_action :sign?, only: [:sign_in, :sign_in_end, :new]
+	skip_before_action :sign_in?, only: [:sign_in, :new, :create, :sign_in_end, :sign_out, :destroy]
 	layout "layouts/main_layout"
   # GET /users
   # GET /users.json
@@ -29,10 +30,6 @@ class UsersController < ApplicationController
   # POST /users
   # POST /users.json
   def create
-		if !User.find_by(email: email).nil?
-			redirect_to url_for({controller: :users, action: :new}), notice: 'Emaiil is invalid or already taken'
-			return
-		end
     @user = User.new(sign_up_params)
 		@user.permission = 0
     respond_to do |format|
@@ -49,25 +46,37 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1
   # PATCH/PUT /users/1.json
   def update
-    respond_to do |format|
-      if @user.update(user_params)
-        format.html { redirect_to @user, notice: 'User was successfully updated.' }
-        format.json { render :show, status: :ok, location: @user }
-      else
-        format.html { render :edit }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
+		if password == session[:password]
+			if params[:confirm] == params[:new_password]
+   		 	if @user.update(password: params[:new_password])
+      		redirect_to action: :sign_out, id: 0
+    		else
+     			render :edit
+				end
+			else
+				render :edit
+			end
+		else
+			render :edit
     end
   end
 
   # DELETE /users/1
   # DELETE /users/1.json
   def destroy
-    @user.destroy
-    respond_to do |format|
-      format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+		if admin?
+			@user.destroy
+			redirect_to users_url
+		elsif password == session[:password]
+   	 	@user.destroy
+			reset_session
+			respond_to do |format|
+      	format.html { redirect_to '/', notice: 'User was successfully destroyed.' }
+      	format.json { head :no_content }
+    	end
+		else
+			render :edit
+		end
   end
 	def sign_in
 		@user = User.new
@@ -81,10 +90,14 @@ class UsersController < ApplicationController
 			session[:email] = email
 			session[:password] = password
 			session[:id] = @current_user.id
-			redirect_to url_for(controller: :layout_test, action: :test_page, id: 1)
+			redirect_to url_for(controller: :friends, action: :index, id: session[:id])
 		else 
 			redirect_to url_for(action: :sign_in, id: 0)
 		end
+	end
+	def sign_out
+		reset_session
+		redirect_to controller: :users, action: :sign_in, id: 0
 	end
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -104,5 +117,10 @@ class UsersController < ApplicationController
 		end
 		def password
 			user_params[:password]
+		end
+		def sign?
+			if !session[:id].nil?
+				head 404
+			end
 		end
 end

@@ -11,17 +11,17 @@
     </div>
   <% end %>
 	<br /> <br />
-  <div class="field" "form-group">
+  <div class="field form-group">
     <%= label_tag "Email address", nil, class: "sign_font" %> <br />
-    <%= f.email_field :email, class: "form-control input-lg" %>
+    <%= f.email_field :email, placeholder: "Email", class: "form-control input-lg" %>
   </div> <br /> </br>
- 	<div class="field" "form-group">  
+ 	<div class="field form-group">  
 		<%= label_tag "Password", nil, class: "sign_font" %> <br />
-	  <%= f.password_field :password, class: "form-control input-lg" %>
+	  <%= f.password_field :password, placeholder: "Password", class: "form-control input-lg" %>
  	</div> <br /><br />
-  <div class="field" "form-group">
+  <div class="field form-group">
     <%= label_tag "Name", nil, class: "sign_font" %> <br />
-    <%= f.text_field :name, class: "form-control input-lg" %>
+    <%= f.text_field :name, placeholder: "Name", class: "form-control input-lg" %>
   </div> <br /> <br /><br />
 
  	<div class="actaions">

@@ -1,4 +1,4 @@
-<%= form_for(@user) do |f| %>
+<%= form_for(user) do |f| %>
   <% if user.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
@@ -13,22 +13,23 @@
 	<br /> <br />
   <div class="field" "form-group">
     <%= label_tag "Email address", nil, class: "sign_font" %> <br />
-    <%= f.email_field :email, class: "form-control input-lg" %>
+    <p class = "form-control-static" style = "font-size: 20px"> <%= session[:email] %></p>
   </div> <br /> </br>
  	<div class="field" "form-group">  
-		<%= label_tag "Password", nil, class: "sign_font" %> <br />
+		<%= label_tag "Old password", nil, class: "sign_font" %> <br />
 	  <%= f.password_field :password, class: "form-control input-lg" %>
  	</div> <br /><br />
-  <div class="field" "form-group">
-    <%= label_tag "Name", nil, class: "sign_font" %> <br />
-    <%= f.text_field :name, class: "form-control input-lg" %>
-  </div> <br /> <br /><br />
-  <div class="field" "form-group">
-    <%= label_tag "Permission", nil, class: "sign_font" %> <br />
-    <%= f.number_field :permission, class: "form-control input-lg" %>
-  </div> <br /> <br /><br />
+ 	<div class="field" "form-group">  
+		<%= label_tag "New password", nil, class: "sign_font" %> <br />
+	  <%= password_field_tag :new_password, nil, class: "form-control input-lg" %>
+ 	</div> <br /><br />
+ 	<div class="field" "form-group">  
+		<%= label_tag "Confirm new password", nil, class: "sign_font" %> <br />
+	  <%= password_field_tag :confirm, nil, class: "form-control input-lg" %>
+ 	</div> <br /><br />
 
  	<div class="actaions">
- 	  <%= f.submit "Modify", class: "btn btn-default btn-lg btn-block" %>
-	</div>
+ 	  <%= f.submit "Modify", class: "btn btn-success btn-lg btn-block" %>
+	</div><br /> <br/>
+	<%= button_to "Delete account", user, method: :delete, data: {confirm: "Are you sure?"}, class: "btn btn-danger btn-lg btn-block" %>
 <% end %>

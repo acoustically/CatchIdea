@@ -19,7 +19,7 @@
 	<body>
 		<div style = "margin:auto; margin-top:300px; width:1500px">
 			<div class = "logo">
-				<%= link_to("Catch Idea", {controller: :layout_test, action: :test_page}, class: :home_link_sign) %>
+				<%= link_to("Catch Idea", {controller: :layout_test, action: :test_page}, class: "home_link_sign link") %>
 			</div>
 			<div class = "sign_content">
     		<%= content_for?(:content) ? yield(:content) : yield %>
