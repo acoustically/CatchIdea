@@ -29,7 +29,7 @@
 				</ul>
 			</div>
 			<%= link_to("Profile", {controller: :layout_test, action: :test_page}, class: "header_button link", id: :header_button2) %>
-			<%= link_to("Idea", {controller: :layout_test, action: :test_page}, class: "header_button link", id: :header_button3) %>
+			<%= link_to("Idea", {controller: :ideas, action: :index, id: session[:id]}, class: "header_button link", id: :header_button3) %>
 			<%= link_to("Friend", {controller: :friends, action: :index, id: session[:id]}, class: "header_button link", id: :header_button4) %>
 		</div>
 		<div class = "contents">
