@@ -21,8 +21,8 @@
     <% @friends.each do |friend| %>
       <tr>
         <td><h3><%= friend.name %></h3></td>
-        <td><h3><%= friend.email %></h3></td>
-	<td width = "30"><%= link_to image_tag("/assets/modify_icon.png", widht:30, height: 30), edit_friend_path(friend) %>
+        <td><h3><%= User.find_by(id: friend.current_id).email %></h3></td>
+				<td width = "30"><%= link_to image_tag("/assets/modify_icon.png", widht:30, height: 30), edit_friend_path(friend) %>
         <td width = "30"><%= link_to image_tag("/assets/substract_icon.png", width: 30, height: 30), friend, class: "link friend_substract", method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>

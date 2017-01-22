@@ -25,12 +25,13 @@ class FriendsController < ApplicationController
   # POST /friends
   # POST /friends.json
   def create
-    @friend = Friend.new(friend_params)
+    @friend = Friend.new
 		@friend.user_id = session[:id]
 		user = find_user(get_email)
+		@friend.current_id = user.id
 		if !user.nil?
 			@friend.name = user.name
-			if !user.email.equal?(session[:email]) && @friend.save
+			if (user.email == session[:email]) && @friend.save
        	redirect_to action: :index
 			else
 				redirect_to action: :new
@@ -72,10 +73,10 @@ class FriendsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def friend_params
-      params.require(:friend).permit(:user_id, :name, :email)
+      params.require(:friend).permit(:user_id, :name)
     end
 		def get_email
-			friend_params[:email]
+			params[:email]
 		end
 		def find_user email
 			User.all.find_by(email: email)
