@@ -10,18 +10,41 @@
       </ul>
     </div>
   <% end %>
+	<div style = "width: 500px; float:left; margin-right:200px;">
+  	<div class="field form-group">
+    	<%= f.label :name %>
+    	<%= f.text_field :name, class: "form-control input-lg" %>
+  	</div><br />
+		<h1>Participants</h1>
+		<div class = "participants">
 
-  <div class="field">
-    <%= f.label :user_id %>
-    <%= f.number_field :user_id %>
-  </div>
-
-  <div class="field">
-    <%= f.label :name %>
-    <%= f.text_field :name %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+		</div>
+  	<div class="actions">
+    	<%= f.submit "Create", class: "btn btn-success btn-lg btn-block" %>
+  	</div>
+	</div>
+	<div>
+	<div style = "float:left; height:600px; width:500px; border-left: 1px solid black; padding-left:200px">
+		<h2>New Participant</h2>
+		<%= form_tag(url_for(action: :add_participant), remote: true, class: "form_horizontal") do |f| %>
+			<div class = "field form-group">
+				<%= label_tag("email",nil)  %><br/>
+				<div style = "float:left; width: 250px" >
+					<%= text_field_tag(:participant_email, "email", class: "form-control input-lg") %>
+				</div>
+					<%= image_submit_tag("/assets/add_icon.png", width: 45, height: 45) %>
+			</div>
+		<% end %><br /><br /><br />
+		<h2>Friends</h2>
+		<div style = "position:relative; font-size:30px;">
+			<% User.find_by(id: session[:id]).friends.each do |friend| %>
+				 <div class = "part_friends">
+					<%= friend.name %>
+					<% flash[:friend_id] = friend.id %>
+					<%= link_to(image_tag("/assets/add_icon.png", widht: 45, height: 45, class: "add_icon"), action: :add_participant, remote: true) %> <br/ ><br />
+				</div>																																												 
+			<% end %>
+		</div>
+	</div>
 <% end %>
+

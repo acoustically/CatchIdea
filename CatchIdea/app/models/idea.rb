@@ -1,3 +1,4 @@
 class Idea < ApplicationRecord
-	belongs_to :idea
+	has_many :contents
+	has_many :participants
 end

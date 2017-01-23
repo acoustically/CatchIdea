@@ -122,6 +122,8 @@ a.header_button:hover {
 	border-bottom:2px solid black;
 }
 .add_icon {
+	right: 0px;
+	position: absolute;
 }
 .friend_index {
 	width:600px;
@@ -160,7 +162,6 @@ a.link:active {
 .idea_table_row {
 	display:table-row;
 }
-
 
 
 

@@ -4,7 +4,7 @@ class IdeasController < ApplicationController
   # GET /ideas
   # GET /ideas.json
   def index
-    @ideas = Idea.all
+    @ideas = User.find_by(id: session[:id]).ideas
 		render layout: "/layouts/friend_layout"
   end
 
@@ -26,6 +26,7 @@ class IdeasController < ApplicationController
   # POST /ideas.json
   def create
     @idea = Idea.new(idea_params)
+		@idea.user_id = session[:id]
 
     respond_to do |format|
       if @idea.save
@@ -61,6 +62,9 @@ class IdeasController < ApplicationController
       format.json { head :no_content }
     end
   end
+	def add_participant
+		@participant = Participant.new
+	end
 
   private
     # Use callbacks to share common setup or constraints between actions.
