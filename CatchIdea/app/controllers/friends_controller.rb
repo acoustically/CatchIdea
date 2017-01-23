@@ -28,10 +28,10 @@ class FriendsController < ApplicationController
     @friend = Friend.new
 		@friend.user_id = session[:id]
 		user = find_user(get_email)
-		@friend.current_id = user.id
 		if !user.nil?
+		@friend.current_id = user.id
 			@friend.name = user.name
-			if (user.email == session[:email]) && @friend.save
+			if !(user.email == session[:email]) && @friend.save
        	redirect_to action: :index
 			else
 				redirect_to action: :new
@@ -46,7 +46,7 @@ class FriendsController < ApplicationController
   def update
     respond_to do |format|
       if @friend.update(friend_params)
-        format.html { redirect_to action: :index, notice: 'Friend was successfully updated.' }
+        format.html { redirect_to action: :index }
         format.json { render :show, status: :ok, location: @friend }
 			else
         format.html { render :edit }
@@ -60,7 +60,7 @@ class FriendsController < ApplicationController
   def destroy
     @friend.destroy
     respond_to do |format|
-      format.html { redirect_to friends_url, notice: 'Friend was successfully destroyed.' }
+      format.html { redirect_to friends_url }
       format.json { head :no_content }
     end
   end

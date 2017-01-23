@@ -157,6 +157,9 @@ a.link:active {
 .menu:hover {
 	border-bottom: 2px solid black;
 }
+.idea_table_row {
+	display:table-row;
+}
 
 
 

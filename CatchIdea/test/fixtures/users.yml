@@ -1,9 +1,25 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  email: MyString
-  password: MyString
+a:
+  name: a
+  password: a
+  email: a
+  permission: 0
 
-two:
-  email: MyString
-  password: MyString
+b:
+  name: b
+  password: b
+  email: b
+  permission: 0
+
+c: 
+  name: c
+  password: c
+  email: c
+  permission: 0
+
+admin:
+  name: admin
+  password: admin
+  email: admin
+  permission: 2

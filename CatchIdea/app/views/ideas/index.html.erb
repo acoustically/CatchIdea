@@ -6,27 +6,20 @@
 <% end %>
 <% content_for :index do %>
 <p id="notice"><%= notice %></p>
-
-<table class = "friend_table">
-  <thead>
-    <tr>
-    </tr>
-  </thead>
-
-  <tbody>
+<div style = "position:relative">
+	<div style = "display: table">
     <% @ideas.each do |idea| %>
-      <tr>
-				<tr>
-					<td><h3><%= idea.name %></h3></td>
-        	<td rowspan = "2" width = "50"><%= link_to image_tag("/assets/modify_icon.png", widht:50, height: 50), edit_idea_path(idea) %></td>
-       		<td rowspan = "2" width = "50"><%= link_to image_tag("/assets/substract_icon.png", width: 50, height: 50), idea, class: "link friend_substract", method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      	</tr>
-				<tr>
-					<td><h3><%= idea.name %></h3></td>
-				</tr>
-			</tr>
+			<div class = "idea_table" style = "width:700px; cursor:pointer">
+			<div style = "display:table-row;">
+				<div style = "display:table-cell; width:700px" onclick = "location.href='<%= url_for(controller: :friends, action: :index)%>'"><h3><%= idea.name %></h3></div>
+        <div style = "display:table-cell; right:60px; position:absolute; margin-top:30px;" width = "50"><%= link_to image_tag("/assets/modify_icon.png", widht:50, height: 50), edit_idea_path(idea) %></div>
+       	<div style = "dispaly:table-cell; right:0px; position:absolute; margin-top:30px;" width = "50"><%= link_to image_tag("/assets/substract_icon.png", width: 50, height: 50), idea, class: "link friend_substract", method: :delete, data: { confirm: 'Are you sure?' } %></div>
+      </div>
+			<div style = "display:table-row">
+				<div style = "display:table-cell; width:700px" onclick = "location.href='<%= url_for(controller: :friends, action: :index)%>'"><h3><%= idea.name %></h3></div>
+			</div>
+			</div>
     <% end %>
-  </tbody>
-</table>
-
+	</div>
+</div>
 <% end %>
