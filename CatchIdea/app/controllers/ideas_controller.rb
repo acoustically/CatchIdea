@@ -1,6 +1,8 @@
 class IdeasController < ApplicationController
   before_action :set_idea, only: [:show, :edit, :update, :destroy]
 	layout "layouts/main_layout"
+	@@add_count = 0
+	@@remove_count = 0
   # GET /ideas
   # GET /ideas.json
   def index
@@ -63,9 +65,30 @@ class IdeasController < ApplicationController
     end
   end
 	def add_participant
-		@participant = Participant.new
+		@@add_count += 1
+		@participant_num = @@add_count
+		@index = params[:index]
+		@participant = Friend.find_by(id: params[:participant])
+		render layout: false
 	end
-
+	def add_participant_from_email
+		@@add_count += 1
+		@participant_num = @@add_count
+		@participant = User.find_by(email: params[:email])
+		render layout: false
+	end
+	def remove_participant
+		@@remove_count += 1
+		@stand_by_num = @@remove_count
+		@index = params[:index]
+		@participant = Friend.find_by(id: params[:participant])
+		render layout: false
+	end
+	def remove_participant_from_email
+		@stand_by_num = @@remove_count + User.find_by(id: session[:id]).friends.length
+		@index = params[:index]
+		render layout: false
+	end
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_idea
