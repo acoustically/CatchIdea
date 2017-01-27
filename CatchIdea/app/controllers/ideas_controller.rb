@@ -30,14 +30,12 @@ class IdeasController < ApplicationController
   # POST /ideas
   # POST /ideas.json
   def create
-    out = ""
-    @@participants.each() do |p|
-      out += p.email
-    end
-    render text: out
-    return
+    @@participants << User.find_by(id: session[:id])
     @idea = Idea.new(idea_params)
 		@idea.user_id = session[:id]
+    @@participants.each do |p|
+      @idea.users << p
+    end
 
     respond_to do |format|
       if @idea.save

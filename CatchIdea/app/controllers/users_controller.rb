@@ -90,6 +90,7 @@ class UsersController < ApplicationController
 			session[:email] = email
 			session[:password] = password
 			session[:id] = @current_user.id
+			session[:name] = @current_user.name
 			redirect_to url_for(controller: :friends, action: :index, id: session[:id])
 		else 
 			redirect_to url_for(action: :sign_in, id: 0)

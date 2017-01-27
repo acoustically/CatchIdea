@@ -23,12 +23,16 @@
       	</div>
 				<div style = "display:table-row">
 					<div style = "display:table-cell; width:700px" onclick = "location.href='<%= url_for(action: :show, id: idea.id)%>'"><h3>
-						<% participants_name = User.find_by(id: session[:id]).name %>
-						<% idea.participants.each do |participant| %>
-							<% friend = Friend.where(id: session[:id]).find_by(participant.user) %>
-							<% participants_name = participants_name + friend.name %>
-						<% end %>
-						<%= participants_name %>
+						<% idea.users.each do |user| %>
+              <% if user.id == session[:id] %>
+                <%= session[:name] %>
+                <% next %>
+              <% elsif Friend.find_by(user_id: session[:id], current_id: user.id).nil? %>
+                <%= User.find_by(id: user.id).name %>
+              <% else %>
+							  <%= Friend.find_by(user_id: session[:id], current_id: user.id).name + " " %>
+              <% end %>
+            <% end %>
 					</h3></div>
 				</div>
 				</div>
