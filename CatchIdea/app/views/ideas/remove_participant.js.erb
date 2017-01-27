@@ -1,2 +1,2 @@
-$("#participant<%=@index%>").remove();
-$("#stand_by").append("<%= escape_javascript(render "remove_participant_result") %>");
+$("#participant<%= @participant_div_index %>").remove();
+$("#awaiters").append("<%= escape_javascript(render "remove_participant_result") %>");

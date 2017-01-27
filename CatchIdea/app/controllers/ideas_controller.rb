@@ -1,8 +1,11 @@
 class IdeasController < ApplicationController
   before_action :set_idea, only: [:show, :edit, :update, :destroy]
+  before_action :reset_participants, except: [:add_participant, :add_participant_from_email, :remove_participant, :remove_participant_from_email, :create]
 	layout "layouts/main_layout"
-	@@add_count = 0
-	@@remove_count = 0
+	@@participant_div_count = 0
+	@@awaiter_div_count = 0
+  @@participants = Array.new
+  @@participants_count = 0
   # GET /ideas
   # GET /ideas.json
   def index
@@ -27,6 +30,12 @@ class IdeasController < ApplicationController
   # POST /ideas
   # POST /ideas.json
   def create
+    out = ""
+    @@participants.each() do |p|
+      out += p.email
+    end
+    render text: out
+    return
     @idea = Idea.new(idea_params)
 		@idea.user_id = session[:id]
 
@@ -65,31 +74,48 @@ class IdeasController < ApplicationController
     end
   end
 	def add_participant
-		@@add_count += 1
-		@participant_num = @@add_count
-		@index = params[:index]
-		@participant = Friend.find_by(id: params[:participant])
+		@@participant_div_count += 1
+		@participant_div_index = @@participant_div_count
+		@awaiter_div_index = params[:awaiter_div_index]
+		@participant = Friend.find_by(id: params[:awaiter_id])
+
+    @@participants << User.find_by(id: @participant.current_id)
+    @@participants_count += 1
+    @participants_index = @@participants_count
 		render layout: false
 	end
 	def add_participant_from_email
-		@@add_count += 1
-		@participant_num = @@add_count
-		@participant = User.find_by(email: params[:email])
-		render layout: false
+		@@participant_div_count += 1
+		@participant_div_index = @@participant_div_count
+		@participant = User.find_by(email: params[:participant_email])
+
+		@@participants << @participant
+    @@participants_count += 1
+    @participants_index = @@participants_count
+    render layout: false
 	end
 	def remove_participant
-		@@remove_count += 1
-		@stand_by_num = @@remove_count
-		@index = params[:index]
-		@participant = Friend.find_by(id: params[:participant])
+		@@awaiter_div_count += 1
+		@awaiter_div_index = @@awaiter_div_count
+		@participant_div_index = params[:participant_div_index]
+		@participant = Friend.find_by(id: params[:participant_id])
+
+    @@participants.delete_at(Integer(params[:participants_index]))
+    @@participants_count -= 1
 		render layout: false
 	end
 	def remove_participant_from_email
-		@stand_by_num = @@remove_count + User.find_by(id: session[:id]).friends.length
-		@index = params[:index]
+		@participant_div_index = params[:participant_div_index]
+    @@participants.delete_at(Integer(params[:participants_index]))
+    @@participants_count -= 1
 		render layout: false
 	end
   private
+    def reset_participants
+      @@participants = Array.new
+      @@participant_div_count = 0
+      @@participants_count = 0
+    end
     # Use callbacks to share common setup or constraints between actions.
     def set_idea
       @idea = Idea.find(params[:id])

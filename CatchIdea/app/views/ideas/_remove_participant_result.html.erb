@@ -1,8 +1,8 @@
-<div id = "part_friends<%= @stand_by_num %>">
+<div id = "awaiter<%= @awaiter_div_index %>">
 	<%= form_tag({action: :add_participant}, remote: true) do %>
 		<%= @participant.name %>
-		<%= hidden_field_tag(:index, @stand_by_num) %>
-		<%= hidden_field_tag(:participant, @participant.id) %>
+		<%= hidden_field_tag(:awaiter_div_index, @awaiter_div_index) %>
+		<%= hidden_field_tag(:awaiter_id, @participant.id) %>
 		<%= image_submit_tag("/assets/add_icon.png", width: 45, height: 45, class: "add_icon") %> <br /><br />
 	<% end %>
 </div>

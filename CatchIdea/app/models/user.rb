@@ -1,6 +1,6 @@
 class User < ApplicationRecord
 	has_many :friends
-	has_many :ideas
+	has_and_belongs_to_many :ideas
 	validates :email,
 		presence: true,
 		uniqueness: true

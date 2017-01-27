@@ -1,8 +1,9 @@
-<div id = "participant<%= @participant_num %>">
+<div id = "participant<%= @participant_div_index %>">
   <%= form_tag({action: :remove_participant}, remote: true) do %>
 	  <%= @participant.name %>
-	  <%= hidden_field_tag(:index, @participant_num) %>
-		<%= hidden_field_tag(:participant, @participant.id) %>
+	  <%= hidden_field_tag(:participant_div_index, @participant_div_index) %>
+		<%= hidden_field_tag(:participant_id, @participant.id) %>
+    <%= hidden_field_tag(:participants_index, @participants_index) %>
 	  <%= image_submit_tag("/assets/substract_icon.png", width: 45, height: 45, class: "add_icon") %> <br /> <br />
   <% end %>
 </div>
