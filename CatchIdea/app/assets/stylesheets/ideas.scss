@@ -4,11 +4,21 @@
 	p {
 		font-size: 50px;
 	}
+	clear:left;
 }
 .participants {
 	width: 300px;
-	height: 80%;
-	position: absolute;
+	height: 800px;
 	border-right: 1px solid #CCCCCC;
 	padding-left: 20px;
+	float:left;
+	position:fixed;
+	z-index:999;
+}
+.idea_contents {
+	margin-left:300px;
+	width: 1200px;
+}
+.center {
+float:right;
 }
