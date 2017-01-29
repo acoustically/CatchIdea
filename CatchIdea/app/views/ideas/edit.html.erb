@@ -1,6 +1,20 @@
-<h1>Editing Idea</h1>
+<div>
+	<div class = "idea_header">
+		<p style><%= @idea.name %></p><br />
+		<br />
+	</div>	
+	<div class = "participants">
+		<h1>Participant</h1>
 
-<%= render 'form', idea: @idea %>
+		<h1>
+			<% @idea.users.each do |participant| %>
+		 		<% if Friend.find_by(id: participant.id).nil? %>
+					<%= participant.name %>
+				<% else %>
+					<%= Friend.find_by(id: participant.id).name %>
+				<% end %><br />
+			<% end %>
+		</h1>
+	</div>
+</div>
 
-<%= link_to 'Show', @idea %> |
-<%= link_to 'Back', ideas_path %>
