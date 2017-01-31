@@ -1,3 +1,3 @@
 class Content < ApplicationRecord
-	belongs_to :ideas
+	belongs_to :participants
 end

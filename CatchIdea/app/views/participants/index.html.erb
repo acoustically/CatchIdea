@@ -15,7 +15,7 @@
     <% @participants.each do |participant| %>
       <tr>
         <td><%= participant.idea_id %></td>
-        <td><%= participant.user %></td>
+        <td><%= participant.user_id %></td>
         <td><%= link_to 'Show', participant %></td>
         <td><%= link_to 'Edit', edit_participant_path(participant) %></td>
         <td><%= link_to 'Destroy', participant, method: :delete, data: { confirm: 'Are you sure?' } %></td>

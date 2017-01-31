@@ -17,7 +17,7 @@ class ParticipantsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create participant" do
     assert_difference('Participant.count') do
-      post participants_url, params: { participant: { idea_id: @participant.idea_id, user: @participant.user } }
+      post participants_url, params: { participant: { idea_id: @participant.idea_id, user_id: @participant.user_id } }
     end
 
     assert_redirected_to participant_url(Participant.last)
@@ -34,7 +34,7 @@ class ParticipantsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update participant" do
-    patch participant_url(@participant), params: { participant: { idea_id: @participant.idea_id, user: @participant.user } }
+    patch participant_url(@participant), params: { participant: { idea_id: @participant.idea_id, user_id: @participant.user_id } }
     assert_redirected_to participant_url(@participant)
   end
 

@@ -11,7 +11,7 @@
     	<% @ideas.each do |idea| %>
 				<div class = "idea_table" style = "width:700px; cursor:pointer">
 				<div style = "display:table-row;">
-					<div style = "display:table-cell; width:700px" onclick = "location.href='<%= url_for(action: :edit, id: idea.id) %>'"><h3>
+					<div style = "display:table-cell; width:700px" onclick = "location.href='<%= url_for(action: :show, id: idea.id) %>'"><h3>
 						<%= idea.name %>
 					</h3></div>
        		<div style = "dispaly:table-cell; right:0px; position:absolute; margin-top:30px;" width = "50">
@@ -19,19 +19,20 @@
 					</div>
       	</div>
 				<div style = "display:table-row">
-					<div style = "display:table-cell; width:700px" onclick = "location.href='<%= url_for(action: :edit, id: idea.id)%>'"><h3>
-						<% idea.users.each do |user| %>
-              <% if user.id == session[:id] %>
-                <%= session[:name] %>
-                <% next %>
-              <% elsif Friend.find_by(user_id: session[:id], current_id: user.id).nil? %>
-                <%= User.find_by(id: user.id).name %>
-              <% else %>
-							  <%= Friend.find_by(user_id: session[:id], current_id: user.id).name + " " %>
-              <% end %>
-            <% end %>
-					</h3></div>
-				</div>
+					<div style = "display:table-cell; width:700px" onclick = "location.href='<%= url_for(action: :show, id: idea.id)%>'">
+						<h3>
+							<% idea.users.each do |user| %>
+              	<% if user.id == session[:id] %>
+                	<%= session[:name] %>
+                	<% next %>
+              	<% elsif Friend.find_by(user_id: session[:id], current_id: user.id).nil? %>
+                	<%= User.find_by(id: user.id).name %>
+              	<% else %>
+							  	<%= Friend.find_by(user_id: session[:id], current_id: user.id).name + " " %>
+              	<% end %>
+            	<% end %>
+						</h3>
+					</div>
 				</div>
     	<% end %>
 		</div>

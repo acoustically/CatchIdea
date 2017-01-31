@@ -10,14 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170127005041) do
+ActiveRecord::Schema.define(version: 20170131095912) do
 
   create_table "contents", force: :cascade do |t|
-    t.integer  "idea_id"
     t.text     "opinion"
     t.integer  "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.integer  "participant_id"
   end
 
   create_table "friends", force: :cascade do |t|
@@ -31,8 +31,9 @@ ActiveRecord::Schema.define(version: 20170127005041) do
   create_table "ideas", force: :cascade do |t|
     t.integer  "user_id"
     t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.text     "discription"
   end
 
   create_table "ideas_users", id: false, force: :cascade do |t|
@@ -49,9 +50,10 @@ ActiveRecord::Schema.define(version: 20170127005041) do
 
   create_table "participants", force: :cascade do |t|
     t.integer  "idea_id"
-    t.integer  "user"
+    t.integer  "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "permission"
   end
 
   create_table "users", force: :cascade do |t|

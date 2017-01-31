@@ -1,14 +1,8 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <strong>User:</strong>
-  <%= @idea.user_id %>
-</p>
-
-<p>
-  <strong>Name:</strong>
-  <%= @idea.name %>
-</p>
-
-<%= link_to 'Edit', edit_idea_path(@idea) %> |
-<%= link_to 'Back', ideas_path %>
+<div style = "padding:50px;">
+<% if @user.permission == 2 %>
+	<div style = "right:20px; position:absolute;">
+	<%= link_to("edit", action: :edit, id: @idea.id) %>
+	</div>
+<% end %>
+<%= @idea.discription.html_safe %>
+</div>

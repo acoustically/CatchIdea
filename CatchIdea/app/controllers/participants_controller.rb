@@ -1,6 +1,6 @@
 class ParticipantsController < ApplicationController
   before_action :set_participant, only: [:show, :edit, :update, :destroy]
-
+	layout "layouts/idea_contents_layout"
   # GET /participants
   # GET /participants.json
   def index
@@ -19,6 +19,7 @@ class ParticipantsController < ApplicationController
 
   # GET /participants/1/edit
   def edit
+		@idea = @participant.idea
   end
 
   # POST /participants
@@ -69,6 +70,6 @@ class ParticipantsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def participant_params
-      params.require(:participant).permit(:idea_id, :user)
+      params.require(:participant).permit(:idea_id, :user_id)
     end
 end

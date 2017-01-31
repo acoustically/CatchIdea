@@ -1,0 +1,22 @@
+<table class = "table-hover" width = "100%">
+	<thead>
+		<tr>
+			<th style = "padding-left:20px;"><h1>Participant</h1></th>
+		</tr>
+	</thead>
+	<tbody>
+		<% @idea.participants.each do |participant| %>
+			<tr>
+				<td style = "padding-left:20px;" onclick = "location.href='<%= url_for(controller: :participants, action: :edit, id: participant.id) %>'">
+					<h2>
+					<% if Friend.find_by(user_id: session[:id], current_id: participant.user_id).nil? %>
+						<%= User.find_by(id: participant.user_id).name %>
+					<% else %>
+						<%= Friend.find_by(user_id: session[:id], current_id: participant.user_id).name %>
+					<% end %><br />
+					</h2>
+				</td>
+			</tr>
+		<% end %>
+	</tbody>
+</table>

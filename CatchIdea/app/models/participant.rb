@@ -1,3 +1,4 @@
 class Participant < ApplicationRecord
-	belongs_to :ideas
+	belongs_to :idea
+	has_many :contents
 end

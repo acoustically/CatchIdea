@@ -1,5 +1,5 @@
 class IdeasController < ApplicationController
-  before_action :set_idea, only: [:show, :edit, :update, :destroy]
+  before_action :set_idea, only: [:show, :edit, :update, :destroy, :update_discription]
   before_action :reset_participants, except: [:add_participant, :add_participant_from_email, :remove_participant, :remove_participant_from_email, :create]
 	layout "layouts/main_layout"
 	@@participant_div_count = 0
@@ -16,6 +16,8 @@ class IdeasController < ApplicationController
   # GET /ideas/1
   # GET /ideas/1.json
   def show
+		@user = Participant.find_by(user_id: session[:id], idea_id: @idea.id)
+		render layout: "layouts/idea_contents_layout"
   end
 
   # GET /ideas/new
@@ -25,20 +27,28 @@ class IdeasController < ApplicationController
 
   # GET /ideas/1/edit
   def edit
+		@user = Participant.find_by(user_id: session[:id], idea_id: @idea.id)
+		if (@user.permission != 2)
+			head 404
+		end
+		render layout: "layouts/idea_layout"
   end
 
   # POST /ideas
   # POST /ideas.json
   def create
-    @@participants << User.find_by(id: session[:id])
     @idea = Idea.new(idea_params)
 		@idea.user_id = session[:id]
-    @@participants.each do |p|
-      @idea.users << p
-    end
-
+		@@participants.each do |p|
+		 	@idea.users << p
+		end
+		@idea.users << User.find_by(id: session[:id])
     respond_to do |format|
       if @idea.save
+    		@@participants.each do |p|
+					make_participant(@idea.id, p.id, 0)
+				end
+				make_participant(@idea.id, session[:id], 2)
         format.html { redirect_to controller: :ideas, action: :index, notice: 'Idea was successfully created.' }
         format.json { render :show, status: :created, location: @idea }
       else
@@ -51,20 +61,17 @@ class IdeasController < ApplicationController
   # PATCH/PUT /ideas/1
   # PATCH/PUT /ideas/1.json
   def update
-    respond_to do |format|
-      if @idea.update(idea_params)
-        format.html { redirect_to @idea, notice: 'Idea was successfully updated.' }
-        format.json { render :show, status: :ok, location: @idea }
-      else
-        format.html { render :edit }
-        format.json { render json: @idea.errors, status: :unprocessable_entity }
-      end
-    end
+    @idea.update(name: params[:idea_name])
+		render layout: false
   end
-
+	def update_discription
+		@idea.update(discription: params[:discription])
+		redirect_to action: :show, id: @idea.id
+	end
   # DELETE /ideas/1
   # DELETE /ideas/1.json
   def destroy
+#추가로 구현해야 될 부분 (participants 삭제, user associate 삭제)
     @idea.destroy
     respond_to do |format|
       format.html { redirect_to ideas_url, notice: 'Idea was successfully destroyed.' }
@@ -109,6 +116,13 @@ class IdeasController < ApplicationController
 		render layout: false
 	end
   private
+		def make_participant(idea_id, user_id, permission)
+			participant = Participant.new
+			participant.idea_id = idea_id
+			participant.user_id = user_id
+			participant.permission = permission
+			participant.save
+		end
     def reset_participants
       @@participants = Array.new
       @@participant_div_count = 0

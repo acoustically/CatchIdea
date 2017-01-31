@@ -1,0 +1,10 @@
+<% content_for :idea_header do %>
+	<p><%= link_to(@idea.name, controller: :ideas, action: :show, id: @idea.id) %></p><br /><br />
+<% end %>
+<% content_for :participants do %>
+	<%= render "application/participants" %>
+<% end %>
+<% content_for :idea_contents do %>
+	<%= yield %>
+<% end %>
+<%= render template: "layouts/idea_layout" %>

@@ -1,0 +1,12 @@
+<% content_for :contents do %>
+	<div class = "idea_header">
+		<%= yield :idea_header %>
+	</div>
+	<div class = "participants">
+		<%= yield :participants %>
+	</div>
+	<div class = "idea_contents">
+		<%= yield :idea_contents %>
+	</div>
+<% end %>
+<%= render template: "layouts/application" %>
