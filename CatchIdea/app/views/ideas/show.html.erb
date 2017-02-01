@@ -4,5 +4,7 @@
 	<%= link_to("edit", action: :edit, id: @idea.id) %>
 	</div>
 <% end %>
-<%= @idea.discription.html_safe %>
+<% if !@idea.discription.nil? %>
+	<%= @idea.discription.html_safe %>
+<% end %>
 </div>

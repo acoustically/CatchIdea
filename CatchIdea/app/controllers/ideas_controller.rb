@@ -1,6 +1,6 @@
 class IdeasController < ApplicationController
-  before_action :set_idea, only: [:show, :edit, :update, :destroy, :update_discription]
-  before_action :reset_participants, except: [:add_participant, :add_participant_from_email, :remove_participant, :remove_participant_from_email, :create]
+  before_action :set_idea, only: [:show, :edit, :update, :destroy, :update_discription, :add_participant_in_edit, :remove_participant_in_edit]
+  before_action :reset_participants, except: [:add_participant, :add_participant_from_email, :remove_participant, :remove_participant_from_email, :create, :add_participant_in_edit, :remove_participant_in_edit]
 	layout "layouts/main_layout"
 	@@participant_div_count = 0
 	@@awaiter_div_count = 0
@@ -52,6 +52,7 @@ class IdeasController < ApplicationController
         format.html { redirect_to controller: :ideas, action: :index, notice: 'Idea was successfully created.' }
         format.json { render :show, status: :created, location: @idea }
       else
+				reset_participant
         format.html { render :new }
         format.json { render json: @idea.errors, status: :unprocessable_entity }
       end
@@ -113,6 +114,25 @@ class IdeasController < ApplicationController
 		@participant_div_index = params[:participant_div_index]
     @@participants.delete_at(Integer(params[:participants_index]))
     @@participants_count -= 1
+		render layout: false
+	end
+	def add_participant_in_edit
+		@@participant_div_count += 1
+		@participant_div_index = @@participant_div_count
+		@participant = User.find_by(email: params[:participant_email])
+		if @participant.nil? || !Participant.find_by(idea_id: @idea.id, user_id: @participant.id).nil?
+			return
+		else
+			make_participant(@idea.id, User.find_by(email: params[:participant_email]).id, 0)
+			@idea.users << @participant
+		end
+		render layout: false
+	end
+	def remove_participant_in_edit
+		@@participant_div_count -= 1
+		@participant_div_index = params[:participant_div_index]
+		Participant.find_by(user_id: params[:participant_id], idea_id: @idea.id).destroy
+		@idea.users.delete(User.find_by(id: params[:participant_id]))
 		render layout: false
 	end
   private
