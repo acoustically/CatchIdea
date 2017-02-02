@@ -29,7 +29,7 @@ class FriendsController < ApplicationController
 		@friend.user_id = session[:id]
 		user = find_user(get_email)
 		if !user.nil?
-		@friend.current_id = user.id
+			@friend.current_id = user.id
 			@friend.name = user.name
 			if !(user.email == session[:email]) && @friend.save
        	redirect_to action: :index

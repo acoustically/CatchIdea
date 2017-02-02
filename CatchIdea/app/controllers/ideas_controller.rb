@@ -39,6 +39,7 @@ class IdeasController < ApplicationController
   def create
     @idea = Idea.new(idea_params)
 		@idea.user_id = session[:id]
+		@@participants = @@participants.uniq
 		@@participants.each do |p|
 		 	@idea.users << p
 		end
@@ -73,7 +74,12 @@ class IdeasController < ApplicationController
   # DELETE /ideas/1.json
   def destroy
 #추가로 구현해야 될 부분 (participants 삭제, user associate 삭제)
-    @idea.destroy
+		@idea.users.delete(User.find_by(id: session[:id]))
+		if (Participant.find_by(idea_id: @idea.id).nil?)
+			Participant.destroy_all(idea_id: @idea.id)
+			Content.destroy_all(idea_id: @idea.id)
+			@idea.destroy
+		end
     respond_to do |format|
       format.html { redirect_to ideas_url, notice: 'Idea was successfully destroyed.' }
       format.json { head :no_content }
