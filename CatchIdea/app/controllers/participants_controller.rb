@@ -1,5 +1,5 @@
 class ParticipantsController < ApplicationController
-  before_action :set_participant, only: [:show, :edit, :update, :destroy]
+  before_action :set_participant, only: [:show, :edit, :update, :destroy, :add_opinion]
 	layout "layouts/idea_contents_layout"
   # GET /participants
   # GET /participants.json
@@ -51,6 +51,17 @@ class ParticipantsController < ApplicationController
       end
     end
   end
+	def add_opinion
+		opinion = Content.new
+		opinion.opinion = params[:opinion]
+		opinion.user_id = session[:id]
+		opinion.participant_id = @participant.id
+		if (opinion.save)
+			redirect_to action: :edit, id: params[:id]
+		else
+			head 404
+		end
+	end
 
   # DELETE /participants/1
   # DELETE /participants/1.json
