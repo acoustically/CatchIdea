@@ -1,8 +1,19 @@
-<% if(Content.find_by(participant_id: @participant.id, user_id: session[:id]).nil?) %>
+<% @participant.contents.each do |content| %>
+	<h2>
+		<% if Friend.where(current_id: content.user_id, user_id: session[:id]).exists? %>
+			<%= Friend.find_by(current_id: content.user_id, user_id: session[:id]).name %>
+		<% else %>
+			<%= User.find_by(id: content.user_id).name %>
+		<% end %>
+	</h2>
+	<%= content.opinion.html_safe %><hr >
+<% end %>
+<% if((Content.find_by(participant_id: @participant.id, user_id: session[:id]).nil? && Content.where(participant_id: @participant.id, user_id: @participant.user_id).exists?) || @participant.user_id == session[:id]) %>
 	<%= form_tag({action: :add_opinion, id: @participant.id}) do %>
+		<h2><%= session[:name] %></h2>
 		<%= text_area_tag(:opinion, nil, id: "tinyMCE") %>
 		<%= submit_tag(:Create, class:  "btn btn-default btn-lg center") %>
 	<% end %>
-<% else %>
-	<%= Content.find_by(participant_id: @participant.id, user_id: session[:id]).opinion.html_safe %>	
+<% elsif Content.find_by(participant_id: @participant.id, user_id: @participant.user_id).nil? %>
+	This participant does not write Idea
 <% end %>
