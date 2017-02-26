@@ -1,18 +1,32 @@
 <% content_for :idea_header do %>
-	<form action = "/ideas/update/<%= @idea.id %>" data-remote = "true"  class="form-inline">
-		<%= text_field_tag :idea_name, nil, placeholder: "Idea name", class: "form-control input-lg" %>
-		<%= submit_tag("Change", class: "btn btn-default btn-lg") %>
-	</form><br /><br />
+  <br /><br />
 <% end %>
 <% content_for :idea_contents do %>
-	<%= form_for(Content.new, url: url_for(controller: :ideas, action: :update_discription, id: @idea.id)) do |idea| %>
-		<% if @idea.discription.nil? %>
-			<%= text_area_tag(:discription, nil, id: :tinyMCE) %>
-		<% else %>
-			<%= text_area_tag(:discription, @idea.discription.html_safe, id: :tinyMCE) %>
-		<% end %>
-		<%= idea.submit("New Idea", class: "btn btn-default btn-lg center") %>
-	<% end %>
+  <%= form_for(@idea, url: url_for(action: :update, id: @idea.id)) do |f| %>
+    <div class = "second_form">
+      <div class = "name_field">
+        <%= f.label (:name) %>
+        <%= f.text_field :name, placeholder: "Idea name", class: "form-control input-lg" %>
+      </div>
+      <div class = "subtitle_field"> 
+        <%= f.label(:subtitle) %>
+        <%= f.text_field(:subtitle, class: "form-control input-lg") %>
+      </div>
+      <div class = "deadline_field">
+        <%= f.label(:deadline) %><br />
+        <%= f.date_field(:deadline, class: "date_field") %>
+      </div>
+      <div class = "deadline_time_field">
+        <%= f.label(:deadline_time) %>
+        <%= f.time_field(:deadline_time, class: "dete_field") %>
+      </div>
+      <%= f.label(:discription) %><br />
+      <%= f.text_area(:discription, id: "tinyMCE", class: "new_text_area") %>
+      <div class = "idea_form_submit">
+        <%= f.submit("edit", class: "btn btn-lg btn-success btn-block") %>
+      </div>
+    </div>
+   <% end %>
 <% end %>
 <% content_for :participants do %>
 	<div class = "add_participant">
@@ -23,7 +37,9 @@
 		<% end %>
 	</div><hr />
 	<% @idea.participants.each do |participant| %>
-		<h2 style = "padding-left:20px;"><%= User.find_by(id: participant.user_id).name %></h2>
+		<h2 style = "padding-left:20px;">
+			<%= find_name(participant.user_id) %>
+		</h2>
 	<% end %><hr />
 	<div id = "participants">
 	</div>

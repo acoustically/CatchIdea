@@ -2,6 +2,11 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-br {
-	border-top: 1px solid black;
+.caret_submit {
+  background:none;
+  border:none;
+}
+
+.idea_contents_text_area {
+  height: 600px;
 }

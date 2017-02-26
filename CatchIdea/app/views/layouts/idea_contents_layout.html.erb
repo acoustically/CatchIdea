@@ -1,5 +1,104 @@
 <% content_for :idea_header do %>
-	<p><%= link_to(@idea.name, controller: :ideas, action: :show, id: @idea.id) %></p><br /><br />
+	<p><%= link_to(@idea.name, controller: :ideas, action: :show, id: @idea.id) %></p>
+  <div class = deadline></div><br /><br />
+  <script>
+  class Timer {    
+      constructor(year, month, date, hour, minute) {
+        this.totalDate = this.getTotalDate(year, month, date);
+        this.totalSecond = this.getTotalSecond(hour,minute, 0);
+      }
+      getTotalDate(year, month, date) {
+        let totalDate = this.yearToDate(year);
+        totalDate += this.monthToDate(year, month);
+        totalDate += date - 1;
+        return totalDate;
+      }
+      getTotalSecond(hour, minute, second) {
+        let totalSecond = hour * 60 * 60;
+        totalSecond += minute * 60;
+        totalSecond += second
+        return totalSecond;
+      }
+      getTimer(year, month, date, hour, minute, second) {
+        let result = "";
+        let totalSecond = this.totalSecond;
+        let dateTimer = this.totalDate - this.getTotalDate(year, month, date);
+        let totalSecondTimer = totalSecond - this.getTotalSecond(hour, minute, second);
+        if(totalSecondTimer < 0) {
+          dateTimer -= 1;
+          totalSecond += 60 * 60 * 24;
+          totalSecondTimer = totalSecond - this.getTotalSecond(hour, minute, second);
+        }
+        let hourTimer = (totalSecondTimer / 60 ) / 60;
+        let minuteTimer = (totalSecondTimer / 60) % 60;
+        let secondTimer = (totalSecondTimer % 60) % 60;
+        result += "<pre><h2>" + dateTimer + "day, " + parseInt(hourTimer) + " : " + parseInt(minuteTimer) + " : " + secondTimer + "</h2></pre>"
+        return result;
+      }
+      isLeapYear(year) {
+        if((year % 4 == 0 && year % 100 != 0 ) || year % 400 == 0) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+      yearToDate(year) {
+        let date = 0;
+        for (var i = 1; i < year; i++) {
+          if (this.isLeapYear(i)) {
+            date += 366;
+          } else {
+            date += 365;
+          }
+        }
+        return date;
+      }
+      monthToDate(year, month) {
+        let date = 0;
+        for (var i = 1; i < month; i++) {
+          date += this.getDateOfMonth(year, i);
+        }
+        return date;
+      }
+      getDateOfMonth(year, month) {
+        switch(month) {
+          case 1:
+          case 3:
+          case 5:
+          case 7:
+          case 8:
+          case 10:
+          case 12:
+            return 31;
+            break;
+          case 4:
+          case 6:
+          case 9:
+          case 11:
+            return 30;
+            break;
+          case 2:
+            if (this.isLeapYear(year)) {
+              return 29;
+            } else {
+              return 28;
+            }
+            break;
+        }
+      }
+    }
+
+    let deadlineDate = "<%= @idea.deadline %>".split("-").map(Number);
+    let deadlineTime = "<%= @idea.deadline_time %>".split(":").map(Number);
+    let deadline = [...deadlineDate, ...deadlineTime];
+    let timer = new Timer(deadline[0],deadline[1], deadline[2], deadline[3], deadline[4]);
+    setInterval(function(){
+      let date = new Date();
+      let currentTime = [date.getFullYear(), date.getMonth(), date.getDate(), date.getHours(), date.getMinutes(), date.getSeconds()];
+      $(".deadline").html(timer.getTimer(date.getFullYear(), date.getMonth() + 1, date.getDate(), date.getHours(), date.getMinutes(), date.getSeconds()));
+    }, 1000);
+      </script>
+
 <% end %>
 <% content_for :participants do %>
 	<%= render "application/participants" %>

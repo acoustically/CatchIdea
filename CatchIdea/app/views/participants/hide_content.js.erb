@@ -1,0 +1,4 @@
+$("#content<%= @content_id %>").empty();
+$("#form<%= @content_id %>").attr('action', "/participants/show_content");
+$("#form<%= @content_id %> span[class=dropup]").removeClass("dropup").addClass("dropdown");
+

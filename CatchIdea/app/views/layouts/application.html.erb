@@ -4,7 +4,6 @@
     <title>CatchIdea</title>
 		<%= javascript_include_tag :defaults %>
     <%= csrf_meta_tags %>
-
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
 		<link href="https://fonts.googleapis.com/css?family=Architects+Daughter" rel="stylesheet">
@@ -19,15 +18,12 @@
 			  integrity="sha256-/SIrNqv8h6QGKDuNoLGA4iret+kyesCkHGzVUUV0shc="
 				  crossorigin="anonymous"></script>
 		<meta name = "viewpor" content = "width = devie-width, initail-scale = 1">
-		<link rel="stylesheet" href = "style_sheet.css">
 		<script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
 		<script>
 			$(document).on("turbolinks:load", function() {
 				tinymce.init({
 					selector: '#tinyMCE',
 					width: "100%",
-					height: 600,
-					width: 1200,
 					theme: 'modern',
 					plugins: [
 						'advlist autolink lists link image charmap print preview hr anchor pagebreak',

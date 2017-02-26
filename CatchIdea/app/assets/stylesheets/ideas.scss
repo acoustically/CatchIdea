@@ -25,6 +25,7 @@
 .idea_contents {
 	float:left;
 	width: 1200px;
+  padding-left: 50px;
 }
 .center {
 	float:right;
@@ -37,8 +38,99 @@
 	}
 }
 #participants {
-	padding-left:20px;
- 	font-size:30px;
+	padding-left: 20px;
+ 	font-size: 30px;
 	position: relative;
-	width:280px;
+	width: 500px;
+  height: 400px;
+  overflow: auto;
 }
+.new_submit{
+  position: absolute;
+  top: 830px;
+  width: 500px;
+  left:650px;
+}
+.date_field {
+  height: 25px;
+}
+.new_text_area {
+  width: 800px;
+  height: 400px;
+}
+.second_form {
+  width: 800px; 
+  height: 800px; 
+  margin: auto;
+  margin-top: 50px;
+}
+.name_field {
+  width: 800px;
+  margin-top: 50px;
+}
+.subtitle_field {
+  width: 300px; 
+  height: 100px; 
+  float: left; 
+  margin-top:20px;
+}
+.deadline_field {
+  margin-left:100px;
+  width: 200px; 
+  height: 100px; 
+  float: left; 
+  margin-top: 20px;
+}
+.idea_form_submit {
+  width: 500px;
+  margin: auto; 
+  margin-top: 50px;
+}
+.deadline_time_field {
+  width: 200px; 
+  height: 100px;
+  float: left; 
+  margin-top: 20px;
+}
+.deadline {
+  font-size: 30px;
+  left: 40%;
+  position: absolute;
+  top: 80px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

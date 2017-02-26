@@ -1,19 +1,42 @@
-<% @participant.contents.each do |content| %>
-	<h2>
-		<% if Friend.where(current_id: content.user_id, user_id: session[:id]).exists? %>
-			<%= Friend.find_by(current_id: content.user_id, user_id: session[:id]).name %>
-		<% else %>
-			<%= User.find_by(id: content.user_id).name %>
-		<% end %>
-	</h2>
-	<%= content.opinion.html_safe %><hr >
-<% end %>
-<% if((Content.find_by(participant_id: @participant.id, user_id: session[:id]).nil? && Content.where(participant_id: @participant.id, user_id: @participant.user_id).exists?) || @participant.user_id == session[:id]) %>
-	<%= form_tag({action: :add_opinion, id: @participant.id}) do %>
-		<h2><%= session[:name] %></h2>
-		<%= text_area_tag(:opinion, nil, id: "tinyMCE") %>
-		<%= submit_tag(:Create, class:  "btn btn-default btn-lg center") %>
-	<% end %>
+<% if(Content.find_by(participant_id: @participant.id, user_id: session[:id]).nil? && @participant.user_id == session[:id]) %>
+  <%= form_tag({action: :add_opinion, id: @participant.id}) do %>
+    <h2><%= session[:name] %></h2>
+    <%= text_area_tag(:opinion, nil, id: "tinyMCE") %>
+    <%= submit_tag(:Create, class:  "btn btn-default btn-lg center") %>
+  <% end %>
 <% elsif Content.find_by(participant_id: @participant.id, user_id: @participant.user_id).nil? %>
-	This participant does not write Idea
+  This participant does not write Idea
+<% else %>
+  <h2>
+    <%= form_tag(url_for(action: :show_content), remote: true, id: "form"+String(Content.find_by(participant_id: @participant.id, user_id: @participant.user_id).id)) do %>
+      <%= hidden_field_tag(:id, @participant.id) %>
+      <%= hidden_field_tag(:content_id, Content.find_by(participant_id: @participant.id, user_id: @participant.user_id).id)%>
+      <%= caret_submit_tag(find_name(@participant.user_id)) %>
+    <% end %>
+  </h2>
+   <div id = "content<%= Content.find_by(participant_id: @participant.id, user_id: @participant.user_id).id%>">
+   </div>
+   <hr />
+  <% @participant.contents.each do |content| %>
+    <% if content.user_id == @participant.user_id %>
+      <% next %>
+    <% end %>
+    <h2>
+      <%= form_tag(url_for(action: :show_content), remote: true, id: "form"+String(content.id)) do %>
+      <%= hidden_field_tag(:id, @participant.id) %>
+      <%= hidden_field_tag(:content_id, content.id)%>
+      <%= caret_submit_tag(find_name(content.user_id)) %>
+    <% end %>
+    </h2>
+    <div id = "content<%= content.id %>">
+    </div>
+    <hr >
+  <% end %>
+  <% if(Content.find_by(participant_id: @participant.id, user_id: session[:id]).nil? && Content.where(participant_id: @participant.id, user_id: @participant.user_id).exists?) %>
+    <%= form_tag({action: :add_opinion, id: @participant.id}) do %>
+      <h2><%= session[:name] %></h2>
+      <%= text_area_tag(:opinion, nil, id: "tinyMCE", class: "idea_contents_text_area") %>
+      <%= submit_tag(:Create, class:  "btn btn-default btn-lg center") %>
+    <% end %>
+  <% end %>
 <% end %>

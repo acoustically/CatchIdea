@@ -1,40 +1,33 @@
 <% content_for :header do %>
-	<h1 style = "float:left"> Ideas </h1>
-	<div style = "float:right" %>
-		<%= link_to(image_tag("/assets/add_icon.png", width: 70, height: 70), controller: :ideas, action: :new) %>
-	</div>
+  <h1 style = "float:left"> Ideas </h1>
+  <div style = "float:right" %>
+    <%= link_to(image_tag("/assets/add_icon.png", width: 70, height: 70), controller: :ideas, action: :new) %>
+  </div>
 <% end %>
 <% content_for :index do %>
-	<p id="notice"><%= notice %></p>
-	<div style = "position:relative">
-		<div style = "display: table">
-    	<% @ideas.each do |idea| %>
-				<div class = "idea_table" style = "width:700px; cursor:pointer">
-				<div style = "display:table-row;">
-					<div style = "display:table-cell; width:700px" onclick = "location.href='<%= url_for(action: :show, id: idea.id) %>'"><h3>
-						<%= idea.name %>
-					</h3></div>
-       		<div style = "dispaly:table-cell; right:0px; position:absolute; margin-top:30px;" width = "50">
-						<%= link_to image_tag("/assets/substract_icon.png", width: 50, height: 50), idea, class: "link friend_substract", method: :delete, data: { confirm: 'Are you sure?' } %>
-					</div>
-      	</div>
-				<div style = "display:table-row">
-					<div style = "display:table-cell; width:700px" onclick = "location.href='<%= url_for(action: :show, id: idea.id)%>'">
-						<h3>
-							<% idea.users.each do |user| %>
-              	<% if user.id == session[:id] %>
-                	<%= session[:name] %>
-                	<% next %>
-              	<% elsif Friend.find_by(user_id: session[:id], current_id: user.id).nil? %>
-                	<%= User.find_by(id: user.id).name %>
-              	<% else %>
-							  	<%= Friend.find_by(user_id: session[:id], current_id: user.id).name + " " %>
-              	<% end %>
-            	<% end %>
-						</h3>
-					</div>
-				</div>
-    	<% end %>
-		</div>
-	</div>
+  <p id="notice"><%= notice %></p>
+  <div style = "position:relative">
+    <div style = "display: table">
+      <% @ideas.each do |idea| %>
+        <div class = "idea_table" style = "width:500px; cursor:pointer">
+        <div style = "display:table-row;">
+          <div style = "display:table-cell; width:500px" onclick = "location.href='<%= url_for(action: :show, id: idea.id) %>'"><h3>
+            <%= idea.name %>
+            </h3></div>
+          <div style = "dispaly:table-cell; right:0px; position:absolute; margin-top:30px;" width = "50">
+            <%= link_to image_tag("/assets/substract_icon.png", width: 50, height: 50), idea, class: "link friend_substract", method: :delete, data: { confirm: 'Are you sure?' } %>
+          </div>
+        </div>
+        <div style = "display:table-row">
+          <div style = "display:table-cell; width:500px" onclick = "location.href='<%= url_for(action: :show, id: idea.id)%>'">
+            <h3>
+              <% idea.users.each do |user| %>
+                <%= find_name(user.id) %>
+              <% end %>
+            </h3>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
 <% end %>

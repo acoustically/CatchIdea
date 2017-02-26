@@ -1,5 +1,5 @@
 <div style = "width: 500px; float:left; margin-right:200px;">
-  <%= form_for(idea) do |f| %>
+  <%= form_for(idea, url: {action: :new_next, id: 0}) do |f| %>
     <% if idea.errors.any? %>
       <div id="error_explanation">
         <h2><%= pluralize(idea.errors.count, "error") %> prohibited this idea from being saved:</h2>
@@ -12,42 +12,42 @@
     <% end %>
     <div class="field form-group">
       <%= f.label :name %>
-    	<%= f.text_field :name, class: "form-control input-lg" %>
-  	</div><br />
-  	<div class="actions">
-    	<%= f.submit "Create", class: "btn btn-success btn-lg btn-block" %>
-  	</div>
+      <%= f.text_field :name, class: "form-control input-lg" %>
+    </div><br />
+    <div class="new_submit">
+      <%= f.submit "Next", class: "btn btn-lg btn-block" %>
+    </div>
   <% end %>
-	<h1>Participants</h1><hr />
-		<div id = "participants", style = "font-size: 30px; position:relative">
-			<%= User.find_by(id: session[:id]).name %>
-		</div>
-	</div>
+  <h1>Participants</h1><hr />
+    <div id = "participants", style = "font-size: 30px; position:relative">
+      <%= User.find_by(id: session[:id]).name %><br/><br />
+    </div>
+  </div>
 <div>
-	<div style = "float:left; height:600px; width:500px; border-left: 1px solid black; padding-left:200px">
-		<h2>New Participant</h2>
-		<%= form_tag({controller: :ideas, action: :add_participant_from_email}, remote: true, class: "form_horizontal") do %>
-			<div class = "field form-group">
-				<%= label_tag("email",nil)  %><br />
-				<div style = "float:left; width: 250px" >
-					<%= text_field_tag(:participant_email, "email", class: "form-control input-lg") %>
-				</div>
-					<%= image_submit_tag("/assets/add_icon.png", width: 45, height: 45) %>
-			</div>
-		<% end %><br /><br /><br /><hr />
-		<h2>Friends</h2>
-		<div id = "awaiters">
-			<% User.find_by(id: session[:id]).friends.each_with_index do |friend, index| %>
-				 <div id = "awaiter<%= index %>">
-					<%= form_tag({action: :add_participant}, remote: true) do %>
-						<%= friend.name %>
-						<%= hidden_field_tag(:awaiter_div_index, index) %>
-						<%= hidden_field_tag(:awaiter_id, friend.id) %>
-						<%= image_submit_tag("/assets/add_icon.png", width: 45, height: 45, class: "add_icon") %> <br /><br />
-					<% end %>																																													 
-				</div>																																												 
-			<% end %>
-		</div>
+  <div style = "float:left; height:600px; width:500px; border-left: 1px solid black; padding-left:200px">
+    <h2>New Participant</h2>
+    <%= form_tag({controller: :ideas, action: :add_participant_from_email}, remote: true, class: "form_horizontal") do %>
+      <div class = "field form-group">
+        <%= label_tag("email",nil)  %><br />
+        <div style = "float:left; width: 250px" >
+	        <%= text_field_tag(:participant_email, "email", class: "form-control input-lg") %>
+        </div>
+        <%= image_submit_tag("/assets/add_icon.png", width: 45, height: 45) %>
+      </div>
+    <% end %><br /><br /><br /><hr />
+    <h2>Friends</h2>
+    <div id = "awaiters">
+      <% User.find_by(id: session[:id]).friends.each_with_index do |friend, index| %>
+       <div id = "awaiter<%= index %>">
+          <%= form_tag({action: :add_participant}, remote: true) do %>
+            <%= friend.name %>
+            <%= hidden_field_tag(:awaiter_div_index, index) %>
+            <%= hidden_field_tag(:awaiter_id, friend.id) %>
+            <%= image_submit_tag("/assets/add_icon.png", width: 45, height: 45, class: "add_icon") %> <br /><br />
+          <% end %>																																													 
+        </div>																																												 
+      <% end %>
+    </div>
 	</div>
 </div>
 

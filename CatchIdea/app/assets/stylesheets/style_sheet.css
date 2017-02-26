@@ -167,5 +167,7 @@ color: black;
 #awaiters {
 	position: relative;
 	font-size: 30px;
+  overflow: auto;
+  height: 300px;
 }
 

@@ -18,6 +18,26 @@ c:
   email: c
   permission: 0
 
+d: 
+  name: d
+  password: d
+  email: d
+  permission: 0
+
+e: 
+  name: e
+  password: e
+  email: e
+  permission: 0
+
+f: 
+  name: e
+  password: e
+  email: e
+  permission: 0
+
+
+
 admin:
   name: admin
   password: admin

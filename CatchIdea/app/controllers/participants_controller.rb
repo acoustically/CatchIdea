@@ -1,5 +1,5 @@
 class ParticipantsController < ApplicationController
-  before_action :set_participant, only: [:show, :edit, :update, :destroy, :add_opinion]
+  before_action :set_participant, only: [:show, :edit, :update, :destroy, :add_opinion, :show_content, :hide_content]
 	layout "layouts/idea_contents_layout"
   # GET /participants
   # GET /participants.json
@@ -71,6 +71,14 @@ class ParticipantsController < ApplicationController
       format.html { redirect_to participants_url, notice: 'Participant was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+  def show_content
+    @content_id = params[:content_id]
+    render layout: false
+  end
+  def hide_content
+    @content_id = params[:content_id]
+    render layout: false
   end
 
   private
