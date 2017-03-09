@@ -19,10 +19,10 @@
     </div>
   <% end %>
   <h1>Participants</h1><hr />
-    <div id = "participants", style = "font-size: 30px; position:relative">
-      <%= User.find_by(id: session[:id]).name %><br/><br />
-    </div>
+  <div id = "participants", style = "font-size: 30px; position:relative">
+    <%= User.find_by(id: session[:id]).name %><br/><br />
   </div>
+</div>
 <div>
   <div style = "float:left; height:600px; width:500px; border-left: 1px solid black; padding-left:200px">
     <h2>New Participant</h2>
