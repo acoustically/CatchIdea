@@ -41,15 +41,11 @@ class ParticipantsController < ApplicationController
   # PATCH/PUT /participants/1
   # PATCH/PUT /participants/1.json
   def update
-    respond_to do |format|
-      if @participant.update(participant_params)
-        format.html { redirect_to @participant, notice: 'Participant was successfully updated.' }
-        format.json { render :show, status: :ok, location: @participant }
+      if @participant.update(vote: params[:vote], comment: params[:comment])
+        redirect_to({controller: :ideas, action: :show, id: @participant.idea.id})
       else
-        format.html { render :edit }
-        format.json { render json: @participant.errors, status: :unprocessable_entity }
+        head 404
       end
-    end
   end
 	def add_opinion
 		opinion = Content.new

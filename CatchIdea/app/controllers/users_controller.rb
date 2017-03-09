@@ -1,7 +1,8 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 	before_action :sign?, only: [:sign_in, :sign_in_end, :new]
-	skip_before_action :sign_in?, only: [:sign_in, :new, :create, :sign_in_end, :sign_out, :destroy]
+	skip_before_filter :verify_authenticity_token 
+  skip_before_action :sign_in?, only: [:sign_in, :new, :create, :sign_in_end, :sign_out, :destroy]
 	layout "layouts/main_layout"
   # GET /users
   # GET /users.json

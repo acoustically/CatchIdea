@@ -17,6 +17,7 @@ class IdeasController < ApplicationController
   # GET /ideas/1.json
   def show
     @user = Participant.find_by(user_id: session[:id], idea_id: @idea.id)
+    @votes = count_vote(Participant.where(idea_id: @idea.id))
     render layout: "layouts/idea_contents_layout"
   end
 
@@ -55,10 +56,10 @@ class IdeasController < ApplicationController
           make_participant(@idea.id, p.id, 0)
         end
         make_participant(@idea.id, session[:id], 2)
-        format.html { redirect_to controller: :ideas, action: :index, notice: 'Idea was successfully created.' }
+        format.html { redirect_to controller: :ideas, action: :index }
         format.json { render :show, status: :created, location: @idea }
       else
-        reset_participant
+        reset_participants
         format.html { render :new }
         format.json { render json: @idea.errors, status: :unprocessable_entity }
       end
@@ -85,7 +86,7 @@ class IdeasController < ApplicationController
       @idea.destroy
     end
     respond_to do |format|
-      format.html { redirect_to ideas_url, notice: 'Idea was successfully destroyed.' }
+      format.html { redirect_to ideas_url }
       format.json { head :no_content }
     end
   end
@@ -146,6 +147,21 @@ class IdeasController < ApplicationController
     render layout: false
   end
   private
+    def count_vote (participants)
+      arr = Array.new
+      participants.each do |p|
+        count = 0
+        participants.each do |q|
+          if(q.vote == p.user_id)
+            count += 1
+          end
+        end
+        arr.push(Vote.new(p.user_id, count.to_s))
+      end
+      arr.sort! { |a, b| b.vote_count <=> a.vote_count }
+      return arr
+    end
+
     def make_participant(idea_id, user_id, permission)
       participant = Participant.new
       participant.idea_id = idea_id
@@ -167,4 +183,11 @@ class IdeasController < ApplicationController
     def idea_params
       params.require(:idea).permit(:user_id, :name, :deadline, :discription, :subtitle, :deadline_time)
     end
+end
+class Vote
+  attr_accessor :idea, :vote_count
+  def initialize(idea, vote_count)
+    @idea = idea
+    @vote_count = vote_count
+  end
 end

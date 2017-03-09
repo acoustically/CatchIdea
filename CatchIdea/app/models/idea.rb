@@ -5,6 +5,8 @@ class Idea < ApplicationRecord
 
 	validates :name,
       presence: true
+  validates :deadline_time,
+      presence: true
 
 	def validate_associated_records_for_users
 

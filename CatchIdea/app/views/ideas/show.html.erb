@@ -1,10 +1,60 @@
-<div style = "padding:50px;">
-<% if @user.permission == 2 %>
-	<div style = "right:20px; position:absolute;">
-	<%= link_to("edit", action: :edit, id: @idea.id) %>
-	</div>
-<% end %>
-<% if !@idea.discription.nil? %>
-  <%= @idea.discription.html_safe %>
-<% end %>
+<div style = "width:80%; height: 800px; position:absolute;">
+  <div class="test" style="height:800px;position:relative; float:left;">
+    <% if @user.permission == 2 %>
+	    <div style = "top: 30px; right:-30px; position:absolute;">
+	      <%= link_to("[edit]", action: :edit, id: @idea.id) %>
+	    </div>
+    <% end %>
+    <h1>Subtitle : <%= @idea.subtitle %></h1>
+    <h1>Deadline : <%= @idea.deadline.to_s + ", " + @idea.deadline_time %></h1>
+    <h1>Discription :</h1><br />
+    <% if !@idea.discription.nil? %>
+      <%= @idea.discription.html_safe %>
+    <% end %>
+  </div>
+  <% if true%>
+    <div class="vote">
+      <% if Participant.find_by(idea_id: @idea.id, user_id: session[:id]).vote.nil? %>
+        <div>
+          <h1>Voting</h1>
+          <h3>Idea</h3>
+          <%= form_tag({controller: :participants, action: :update, id: Participant.find_by(idea_id: @idea.id, user_id: session[:id]).id}, method: :put) do |f| %>
+            <% @idea.participants.each do |p| %>
+              <div class="radio">
+                <label>
+                  <input type="radio" name="vote" value="<%= p.user_id %>">
+                 <%= find_name(p.user_id) %>
+                </label>
+              </div>
+            <% end %>
+            <h3>Comment</h3>
+            <%= text_area_tag(:comment, nil, class: "comment") %><br />
+            <%= submit_tag("Vote", class: "btn btn-default") %>
+          <% end %>
+        </div>
+      <% else %>
+        <div style="width:100%; height: 320px; overflow: auto;">
+          <h1>Voting Result</h1><br />
+          <% @votes.each do |vote| %>
+            <% if (vote.vote_count == @votes[0].vote_count) %>
+              <h3 style="color: red">
+            <% else %>
+              <h3>
+            <% end %>
+              <%= find_name(vote.idea) %>
+              <span style="float:right; margin-right:30px;"><%= vote.vote_count %></span>
+            </h3>
+          <% end %><hr />
+        </div>
+        <div style="width:100%; height: 480px">
+          <h2>Comment</h2>
+          <% @idea.participants.each do |p| %>
+            <% if(p.vote == @votes[0].idea) %>
+              <%= p.comment %><br /><br />
+            <% end %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
 </div>
